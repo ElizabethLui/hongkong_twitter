@@ -1,0 +1,88 @@
+---
+title: "hk_twitter"
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+```{r}
+library(quanteda)
+library(qlcMatrix)
+library(stringdist)
+library(vars)
+library(AER)
+library(readxl)
+library(stargazer)
+library(scales)
+library(quantmod)
+library(urca)
+library(sandwich)
+library(lmtest)
+library(forecast)
+library(dyn)
+library(rtweet) ; library(tidyverse) ; library(tidytext)
+library(twitteR)
+library(igraph)
+library(stringr)
+library(tidygraph)
+library(ggraph)
+library(stringi)
+library(tidyr)
+library(xts)
+library(DescTools)
+library(ggplot2)  # For graphics
+library(dplyr)  # For aggregating
+library(stringr)
+library(wordcloud)
+library(gdata)
+library(dynlm)
+```
+
+
+```{r}
+#load 3 datasets as dataframes
+df <- read.csv('tweets_all.csv') #hk tweets
+us <-read.csv('us.csv') #hk tweets from us politicians
+uk <-read.csv('uk.csv') #hk tweets from uk politicians
+```
+
+
+```{r tweet_freq}
+# visulize the frequency of tweets by day
+
+df$created_at <- as.Date(df$created_at) # first, change "created_at" as date item
+
+tweet_freq <- ts_plot(df, by = "days") + 
+                labs(x = NULL, y = NULL,
+                title = "Frequency of Tweets by Day in Hong Kong") +
+              theme_minimal()
+
+plot(tweet_freq)
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
